@@ -12,16 +12,17 @@ SYSTEM_THREAD(ENABLED);
 
 void setup()
 {
-  pinMode(D6, OUTPUT);               // sets pin as output
-  pinMode(D7, INPUT_PULLDOWN);    // sets pin as input
+  pinMode(D6, OUTPUT);
+  pinMode(D7, INPUT_PULLDOWN);
 }
 
 void loop()
 {
-  // blink the LED as long as the button is pressed
+  // turns the LED on once the button is pushed. 
   if(digitalRead(D7) == HIGH) {
-    digitalWrite(D6, LOW);          // sets the LED on
-    } else {
-    digitalWrite(D6, HIGH);           // sets the LED off
+    digitalWrite(D6, HIGH);          // if the button is pushed, the light is set to on
+    } else 
+    {
+    digitalWrite(D6, LOW);           // if the button is not pushed, the circut isnt completed so the light is kept on. 
   }
 }

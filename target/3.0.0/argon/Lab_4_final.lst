@@ -19,23 +19,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   7 .module_info_crc 00000004  000d5174  000d5174  00025174  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .debug_info   001359f9  00000000  00000000  00025178  2**0
+  8 .debug_info   001359fd  00000000  00000000  00025178  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_abbrev 000128d3  00000000  00000000  0015ab71  2**0
+  9 .debug_abbrev 000128d5  00000000  00000000  0015ab75  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0002d6ab  00000000  00000000  0016d444  2**0
+ 10 .debug_loc    0002d6ab  00000000  00000000  0016d44a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 00002508  00000000  00000000  0019aaef  2**0
+ 11 .debug_aranges 00002508  00000000  00000000  0019aaf5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00008258  00000000  00000000  0019cff7  2**0
+ 12 .debug_ranges 00008240  00000000  00000000  0019cffd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  00033db3  00000000  00000000  001a524f  2**0
+ 13 .debug_macro  00033db3  00000000  00000000  001a523d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   000319b6  00000000  00000000  001d9002  2**0
+ 14 .debug_line   000319b1  00000000  00000000  001d8ff0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    001209d1  00000000  00000000  0020a9b8  2**0
+ 15 .debug_str    001209d1  00000000  00000000  0020a9a1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_frame  000064ec  00000000  00000000  0032b38c  2**2
+ 16 .debug_frame  000064ec  00000000  00000000  0032b374  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -194,14 +194,14 @@ SYSTEM_THREAD(ENABLED);
 void setup()
 {
    d40ba:	b508      	push	{r3, lr}
-  pinMode(D6, OUTPUT);               // sets pin as output
+  pinMode(D6, OUTPUT);
    d40bc:	2101      	movs	r1, #1
    d40be:	2006      	movs	r0, #6
    d40c0:	f000 fe5c 	bl	d4d7c <pinMode>
-  pinMode(D7, INPUT_PULLDOWN);    // sets pin as input
+  pinMode(D7, INPUT_PULLDOWN);
 }
    d40c4:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
-  pinMode(D7, INPUT_PULLDOWN);    // sets pin as input
+  pinMode(D7, INPUT_PULLDOWN);
    d40c8:	2103      	movs	r1, #3
    d40ca:	2007      	movs	r0, #7
    d40cc:	f000 be56 	b.w	d4d7c <pinMode>
@@ -211,21 +211,21 @@ void setup()
 void loop()
 {
    d40d0:	b508      	push	{r3, lr}
-  // blink the LED as long as the button is pressed
+  // turns the LED on once the button is pushed. 
   if(digitalRead(D7) == HIGH) {
    d40d2:	2007      	movs	r0, #7
    d40d4:	f000 fe7c 	bl	d4dd0 <digitalRead>
    d40d8:	2801      	cmp	r0, #1
-    digitalWrite(D6, LOW);          // sets the LED on
-    } else {
-    digitalWrite(D6, HIGH);           // sets the LED off
+   d40da:	4601      	mov	r1, r0
+    digitalWrite(D6, HIGH);          // if the button is pushed, the light is set to on
+    } else 
+    {
+    digitalWrite(D6, LOW);           // if the button is not pushed, the circut isnt completed so the light is kept on. 
   }
-   d40da:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
-    digitalWrite(D6, LOW);          // sets the LED on
-   d40de:	bf0c      	ite	eq
-   d40e0:	2100      	moveq	r1, #0
-    digitalWrite(D6, HIGH);           // sets the LED off
-   d40e2:	2101      	movne	r1, #1
+   d40dc:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+    digitalWrite(D6, LOW);           // if the button is not pushed, the circut isnt completed so the light is kept on. 
+   d40e0:	bf18      	it	ne
+   d40e2:	2100      	movne	r1, #0
    d40e4:	2006      	movs	r0, #6
    d40e6:	f000 be5a 	b.w	d4d9e <digitalWrite>
 	...
